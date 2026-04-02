@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product
+  template:
+    metadata:
+      labels:
+        app: product
+    spec:
+      containers:
+      - name: product-container
+        image: product-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5001
+        resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "200m"
+        volumeMounts:
+        - mountPath: "/app/data"
+          name: storage
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: app-pvc

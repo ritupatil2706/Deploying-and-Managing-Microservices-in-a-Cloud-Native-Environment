@@ -1,0 +1,7 @@
+& minikube docker-env | Invoke-Expression
+
+docker build -t user-service ./user-service
+docker build -t product-service ./product-service
+docker build -t order-service ./order-service
+
+kubectl apply -f k8s/
